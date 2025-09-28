@@ -191,12 +191,17 @@ get_hls_uri_nhk() {
 
   if [ "${station_id}" = "r2" ]; then
     # R2
-    curl --silent "https://www.nhk.or.jp/radio/config/config_v5.8.0_radiru_and.xml" | xmllint --xpath "string(/radiru_config/config[@key='url_stream_r2']/value[1]/@text)" - 2> /dev/null
+    curl --silent "https://www.nhk.or.jp/radio/config/config_web.xml" | xmllint --xpath "string(//stream_url/data[3]/r2hls)" - | sed -e "s/master/audio\/media/" 2> /dev/null
   else
-    # Split area and channel
     area="$(echo "${station_id}" | cut -d '-' -f 1)"
     channel="$(echo "${station_id}" | cut -d '-' -f 2)"
-    curl --silent "https://www.nhk.or.jp/radio/config/config_v5.8.0_radiru_and.xml" | xmllint --xpath "string(/radiru_config/area[@id='${area}']/config[@key='url_stream_${channel}']/value[1]/@text)" - 2> /dev/null
+    echo ${channel} >> /tmp/radish.txt
+    if [ "${channel}" = "r1" ]; then
+      curl --silent "https://www.nhk.or.jp/radio/config/config_web.xml" | xmllint --xpath "string(//area[text()='${area}']/parent::node()/r1hls)" - | sed -e "s/master/audio\/media/" 2> /dev/null
+    else
+    #fm
+      curl --silent "https://www.nhk.or.jp/radio/config/config_web.xml" | xmllint --xpath "string(//area[text()='${area}']/parent::node()/fmhls)" - | sed -e "s/master/audio\/media/" 2> /dev/null
+    fi
   fi
 }
 
