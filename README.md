@@ -1,4 +1,4 @@
-# radish
+# radish-play.sh
 [NHKラジオ らじる★らじる](https://www.nhk.or.jp/radio/) / [radiko](http://radiko.jp/) / [ListenRadio](http://listenradio.jp/) / [渋谷のラジオ](https://shiburadi.com/) で現在配信中の番組を保存するシェルスクリプトを改造し、単純に再生するようにしたものです。
 
 
@@ -11,7 +11,7 @@
 
 ## 使い方
 ```
-$ ./radi.sh [options]
+$ ./radish-play.sh [options]
 ```
 
 | 引数 | 必須 |説明 |備考 |
@@ -28,59 +28,58 @@ $ ./radi.sh [options]
 ## 実行例
 ```
 NHK らじる★らじる
-$ ./radi.sh -t nhk -s tokyo-fm -d 31 -o "/hoge/foo.m4a"
+$ ./radish-play.sh -t nhk -s tokyo-fm -d 31 -o "/hoge/foo.m4a"
 ```
 
 ```
 radikoエリア内の局
-$ ./radi.sh -t radiko -s LFR -d 21 -o "/hoge/$(date "+%Y-%m-%d") テレフォン人生相談.m4a"
+$ ./radish-play.sh -t radiko -s LFR -d 21 -o "/hoge/$(date "+%Y-%m-%d") テレフォン人生相談.m4a"
 ```
 
 ```
 radikoエリア外の局 (ラジコプレミアム)
-$ ./radi.sh -t radiko -s HBC -d 31 -o "/hoge/foo.m4a" -i "foo@example.com" -p "password"
+$ ./radish-play.sh -t radiko -s HBC -d 31 -o "/hoge/foo.m4a" -i "foo@example.com" -p "password"
 ```
 
 ```
 radikoエリア外の局 (ラジコプレミアム 環境変数からログイン情報設定)
 $ export RADIKO_MAIL="foo@example.com"
 $ export RADIKO_PASSWORD="password"
-$ ./radi.sh -t radiko -s HBC -d 31 -o "/hoge/foo.m4a"
+$ ./radish-play.sh -t radiko -s HBC -d 31 -o "/hoge/foo.m4a"
 ```
 
 ```
 ListenRadio
-$ ./radi.sh -t lisradi -s 30058 -d 30 -o "/hoge/foo.m4a"
+$ ./radish-play.sh -t lisradi -s 30058 -d 30 -o "/hoge/foo.m4a"
 ```
 
 ```
 渋谷のラジオ
-$ ./radi.sh -t shiburadi -d 30 -o "/hoge/foo.mp3"
+$ ./radish-play.sh -t shiburadi -d 30 -o "/hoge/foo.mp3"
 ```
 
 
 ## 注意点
 
-録音手法については2019/5/25時点での調査結果であり、対象サイトの仕様変更等で利用できなくなる可能性もありますのであらかじめご了承ください。<br>
 また渋谷のラジオの録音時にではffmpegから "Application provided invalid, non monotonically increasing dts to muxer in stream" というメッセージが吐き出されるのですが、音声は聴けるようなのでとりあえずそのままにしています。
 
 
 ## 動作確認環境
-- Ubuntu 18.04.2 LTS
-    - curl 7.58.0
-    - xmllint using libxml version 20904
-    - jq 1.5-1-a5b5cbe
-    - ffmpeg 4.1.3-0york1~18.04
-- FreeBSD 12.0-RELEASE
-    - curl 7.65.0
-    - xmllint using libxml version 20908
+- Raspberry Pi OS Debian 12(Bookworm)
+    - curl 7.88.1
+    - xmllint using libxml version 20914
     - jq 1.6
-    - ffmpeg 4.1.3
+    - ffmpeg 5.1.6-0+deb12u1+rpt3
+
+-Hardware: Raspberry Pi Zero 2W, Raspberry Pi Zero W
+但し radikoエリア外の局の動作検証は行っていません
 
 
-##  作った人
-うる。 ([@uru_2](https://twitter.com/uru_2))
+##  メンテナー
+kikegami0841 ([https://ss1.xrea.com/ike.s206.xrea.com/wordpress/](https://ss1.xrea.com/ike.s206.xrea.com/wordpress/))
 
+- forked from ([jg1uaa/radish-play](https://github.com/jg1uaa/radish-play))
 
 ## ライセンス
-[MIT License](LICENSE)
+[MIT License](LICENSE) 
+fork元に準ずる
