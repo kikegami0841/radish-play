@@ -191,16 +191,16 @@ get_hls_uri_nhk() {
 
   if [ "${station_id}" = "r2" ]; then
     # R2
-    curl --silent "https://www.nhk.or.jp/radio/config/config_web.xml" | xmllint --xpath "string(//stream_url/data[3]/r2hls)" - | sed -e "s/master/audio\/media/" 2> /dev/null
+    curl --silent "https://www.nhk.or.jp/radio/config/config_web.xml" | xmllint --xpath "string(//stream_url/data[3]/r2hls)" - | xargs -n1 curl | tail -n 1 2> /dev/null
   else
     area="$(echo "${station_id}" | cut -d '-' -f 1)"
     channel="$(echo "${station_id}" | cut -d '-' -f 2)"
     echo ${channel} >> /tmp/radish.txt
     if [ "${channel}" = "r1" ]; then
-      curl --silent "https://www.nhk.or.jp/radio/config/config_web.xml" | xmllint --xpath "string(//area[text()='${area}']/parent::node()/r1hls)" - | sed -e "s/master/audio\/media/" 2> /dev/null
+      curl --silent "https://www.nhk.or.jp/radio/config/config_web.xml" | xmllint --xpath "string(//area[text()='${area}']/parent::node()/r1hls)" - | xargs -n1 curl | tail -n 1 2> /dev/null
     else
     #fm
-      curl --silent "https://www.nhk.or.jp/radio/config/config_web.xml" | xmllint --xpath "string(//area[text()='${area}']/parent::node()/fmhls)" - | sed -e "s/master/audio\/media/" 2> /dev/null
+      curl --silent "https://www.nhk.or.jp/radio/config/config_web.xml" | xmllint --xpath "string(//area[text()='${area}']/parent::node()/fmhls)" - | xargs -n1 curl | tail -n 1 2> /dev/null
     fi
   fi
 }
