@@ -16,46 +16,46 @@ $ ./radish-play.sh [options]
 
 | 引数 | 必須 |説明 |備考 |
 |:-|:-:|:-|:-|
-|-t _SITE TYPE_|○|録音対象サイト|nhk: NHK らじる★らじる<br>radiko: radiko<br>lisradi: ListenRadio<br>shiburadi: 渋谷のラジオ
+|-t _SITE TYPE_|○|対象サイト|nhk: NHK らじる★らじる<br>radiko: radiko<br>lisradi: ListenRadio<br>shiburadi: 渋谷のラジオ
 |-s _STATION ID_|△|放送局ID|`-l` オプションで表示されるID<br>渋谷のラジオは指定不要|
-|-d _MINUTE_|○|録音時間(分)||
+|-d _MINUTE_|○|録音時間(分)(Not In Use)||
 |-i _MAIL_||ラジコプレミアム ログインメールアドレス|環境変数 `RADIKO_MAIL` でも指定可能|
 |-p _PASSWORD_||ラジコプレミアム ログインパスワード|環境変数 `RADIKO_PASSWORD` でも指定可能|
-|-o _PATH_||出力パス|未指定の場合カレントディレクトリに `放送局ID_年月日時分秒.(m4a or mp3)` というファイルを作成<br>拡張子がない場合または配信側の形式と異なる場合には拡張子を自動補完します|
+|-o _PATH_||出力パス|未指定の場合カレントディレクトリに `放送局ID_年月日時分秒.(m4a or mp3)` というファイルを作成<br>拡張子がない場合または配信側の形式と異なる場合には拡張子を自動補完します(Not In Use)|
 |-l||放送局ID/名称表示|結果は300行以上になります、また取得は(割と)重いです|
 
 
 ## 実行例
 ```
 NHK らじる★らじる
-$ ./radish-play.sh -t nhk -s tokyo-fm -d 31 -o "/hoge/foo.m4a"
+$ ./radish-play.sh -t nhk -s tokyo-fm
 ```
 
 ```
 radikoエリア内の局
-$ ./radish-play.sh -t radiko -s LFR -d 21 -o "/hoge/$(date "+%Y-%m-%d") テレフォン人生相談.m4a"
+$ ./radish-play.sh -t radiko -s LFR
 ```
 
 ```
 radikoエリア外の局 (ラジコプレミアム)
-$ ./radish-play.sh -t radiko -s HBC -d 31 -o "/hoge/foo.m4a" -i "foo@example.com" -p "password"
+$ ./radish-play.sh -t radiko -s HBC
 ```
 
 ```
 radikoエリア外の局 (ラジコプレミアム 環境変数からログイン情報設定)
 $ export RADIKO_MAIL="foo@example.com"
 $ export RADIKO_PASSWORD="password"
-$ ./radish-play.sh -t radiko -s HBC -d 31 -o "/hoge/foo.m4a"
+$ ./radish-play.sh -t radiko -s HBC
 ```
 
 ```
 ListenRadio
-$ ./radish-play.sh -t lisradi -s 30058 -d 30 -o "/hoge/foo.m4a"
+$ ./radish-play.sh -t lisradi -s 30058
 ```
 
 ```
 渋谷のラジオ
-$ ./radish-play.sh -t shiburadi -d 30 -o "/hoge/foo.mp3"
+$ ./radish-play.sh -t shiburadi
 ```
 
 
