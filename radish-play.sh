@@ -424,6 +424,8 @@ if [ "${type}" = "radiko" ]; then
   ffplay \
       -loglevel error \
       -fflags +discardcorrupt \
+      -framedrop \
+      -infbuf \
       -headers "X-Radiko-Authtoken: ${radiko_authtoken}" \
       -i "${playlist_uri}" \
       -nodisp
@@ -431,6 +433,8 @@ else
   ffplay \
       -loglevel error \
       -fflags +discardcorrupt \
+      -framedrop \
+      -infbuf \
       -i "${playlist_uri}" \
       -nodisp
 fi
