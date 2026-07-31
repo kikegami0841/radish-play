@@ -18,7 +18,7 @@ $ ./radish-play.sh [options]
 |:-|:-:|:-|:-|
 |-t _SITE TYPE_|○|対象サイト|nhk: NHK らじる★らじる<br>radiko: radiko<br>lisradi: ListenRadio<br>shiburadi: 渋谷のラジオ
 |-s _STATION ID_|△|放送局ID|`-l` オプションで表示されるID<br>渋谷のラジオは指定不要|
-|-d _MINUTE_|○|録音時間(分)(Not In Use)||
+|-d _MINUTE_|○|録音時間(分)|(Not In Use)|
 |-i _MAIL_||ラジコプレミアム ログインメールアドレス|環境変数 `RADIKO_MAIL` でも指定可能|
 |-p _PASSWORD_||ラジコプレミアム ログインパスワード|環境変数 `RADIKO_PASSWORD` でも指定可能|
 |-o _PATH_||出力パス|未指定の場合カレントディレクトリに `放送局ID_年月日時分秒.(m4a or mp3)` というファイルを作成<br>拡張子がない場合または配信側の形式と異なる場合には拡張子を自動補完します(Not In Use)|
@@ -71,8 +71,8 @@ $ ./radish-play.sh -t shiburadi
     - jq 1.6
     - ffmpeg 5.1.6-0+deb12u1+rpt3
 
--Hardware: Raspberry Pi Zero 2W, Raspberry Pi Zero W
-但し radikoエリア外の局の動作検証は行っていません
+-Hardware: Raspberry Pi Zero 2W, Raspberry Pi Zero W <br>
+但し radiko プレミアム(エリア外の局の動作検証)は行っていません
 
 
 ##  メンテナー
