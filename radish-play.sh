@@ -60,7 +60,7 @@ show_all_stations() {
 
   # ListenRadio
   echo "Record site type: lisradi"
-  curl --silent "http://listenradio.jp/service/channel.aspx" | jq -r '.Channel[] | "  " + (.ChannelId | tostring) + ": " + .ChannelName' 2> /dev/null
+  curl --silent "https://listenradio.jp/service/channel.aspx" | jq -r '.Channel[] | "  " + (.ChannelId | tostring) + ": " + .ChannelName' 2> /dev/null
   echo ""
 
   # Shibuya no Radio
@@ -236,7 +236,7 @@ get_hls_uri_radiko() {
 get_hls_uri_lisradi() {
   station_id=$1
 
-  curl --silent "http://listenradio.jp/service/channel.aspx" | jq -r ".Channel[] | select(.ChannelId == ${station_id}) | .ChannelHls" 2> /dev/null
+  curl --silent "https://listenradio.jp/service/channel.aspx" | jq -r ".Channel[] | select(.ChannelId == ${station_id}) | .ChannelHls" 2> /dev/null
 }
 
 #######################################
@@ -427,6 +427,15 @@ if [ "${type}" = "radiko" ]; then
       -framedrop \
       -infbuf \
       -headers "X-Radiko-Authtoken: ${radiko_authtoken}" \
+      -i "${playlist_uri}" \
+      -nodisp
+elif [ "${type}" = "lisradi" ]; then
+  ffplay \
+      -loglevel error \
+      -fflags +discardcorrupt \
+      -framedrop \
+      -infbuf \
+      -headers "Origin: https://listenradio.jp" \
       -i "${playlist_uri}" \
       -nodisp
 else
